@@ -1,0 +1,203 @@
+@/*
+   New Perspectives on HTML5 and CSS3, 7th Edition
+   Tutorial 2
+   Case Problem 4
+   
+   Great Lakescape Lodge Style Sheet
+   Author: 
+   Date:   
+   
+   Filename: lake_styles.css
+
+*/
+@charset "utf-8";
+.better {
+    background-color: gray;
+    border: none;
+}
+
+/*
+3.a  Definition of the character encoding used in the style sheet file (it is the ‘.css’ files) (refer
+to --> https://www.w3.org/International/questions/qa-css-charset and
+https://www.w3schools.com/cssref/pr_charset_rule.asp);
+3.b  Application of a web font (it is the ‘.woff ’ and ‘.ttf ’files) (two fonts are supplied for you in
+the ZIP archive provided via the link above) (for more details refer to -->
+https://www.w3schools.com/css/css3_fonts.asp).
+*/
+@font-face {
+   font-family: 'woff_left_h';
+   src: url('cac_champagne.woff') format('woff'),
+        url('cac_champagne.ttf') format('ttf');
+}
+@font-face {
+   font-family: 'woff_right_h';
+   src: url('DobkinPlain.woff') format('woff'),
+        url('DobkinPlain.ttf') format('ttf');
+}
+
+body {
+    background-color: #cccb8c;opacity: 0.9;
+	/*
+	3.c	 Setting background and text colours using both colour values and colour names.
+	3.d. An application of semi-transparent colour
+	
+	Another way 
+	background-color: rgba(255, 0, 0, 0.5);
+	*/
+
+    color: whitesmoke;
+    padding: 0px;
+	/*Padding 是 CSS 中用于定义元素内容与边框之间的空间的属性。它可以为元素的四个边设置内边距，
+	从而控制元素内容与边框之间的距离。*/
+	line-height: 1.2;/*行间距*/
+	
+
+}           
+/*通过 > 表示特定位置的style*/
+/*设置顶部导航的背景*/
+/*3.e  Selectors showing style rules applied to nested elements, child elements
+, and elements based on the id attribute*/
+body  > header > nav {
+	  margin: 0px;
+	  padding: 10px;
+	  /*font-size: 30px;使用这个，会被下面那个a冲掉，也就是下面的a优先级更高，并且与位置无关*/
+	  background-color: #784a78;
+	  
+	  /*可以嵌套设定*/
+	  a{
+		  color: lightgray;/*优先级比下面的优先级更高*/
+	  }
+	  /*background-color: #784a78;但是这个background会变成蓝色，啥原理没懂；但是不影响这条语句实现*/
+	  /*
+	  photo时可以用到
+	  background-size；
+	  这个color只可以控制nav里的文字Test那个，但是图中为ul，所以无法更改颜色
+	  color: white;
+		   <!--Test text 666114514-->
+	  */
+	 
+}
+a{
+		  color: dimgray;
+		  text-decoration: none;/*delete underline*/
+		  
+		  font-size: 14px;
+		  margin-left: 25px;
+}
+
+/* 3.g  Use of pseudo-elements and pseudo-classes as selectors. */
+body> #leftcol> img:hover {
+	
+    transition: 0.1s ease-in-out;
+    /* kuru kuru */
+		transform: rotate(180deg);
+}
+
+}
+body> section#leftcol >h1 {
+    font-size: 50px;
+    font-weight: normal;
+    margin: 0; 
+    padding-bottom: 5px; 
+    font-family: 'woff_left_h'; 
+}
+
+body> section#rightcol >nav >h2 {
+    font-size: 30px;
+    font-weight: normal;
+	/*3.h  Styles that modify the padding space and margin space around an element*/
+    margin: 20px 0px -15px 40px;
+    padding-bottom: 10px; 
+    /*font-family: 'woff_right_h';长得不像啊怎么 */
+	font-family: 'woff_right_h'; 
+}
+/*CSS :first-of-type 选择器用于选中一组兄弟元素中同类型的第一个元素。这个伪类选择器非常有用，特别是当你想要为特定类型的第一个元素应用特定样式时。
+
+代码示例
+
+假设你有多个 <aside> 元素，并且你想要为第一个 <aside> 元素设置不同的样式，
+你可以使用 :first-of-type 选择器来实现这一点。*/
+
+aside:first-of-type{
+	h1{
+		font-size: 22px;
+		text-align: center;
+	}
+	font-size: 16px;
+	a{
+		    color: lightpink;
+			text-decoration-line: underline;
+	}
+	margin-top: 15px; /* 3.h: Margin space */
+	ul {/*3.f. Styles that modify the appearance of lists and list markers*/
+	    /*list-style-type: disc; 如果之前采用全局ul none，可以使用这个加入disc*/
+	    padding-left: 20px; 
+		font-size: 14px;
+	}
+	background-color: rgb(227, 162, 142)
+
+}
+aside#two{
+	background-color: rgb(209, 187, 114);
+	h1{
+		font-size: 22px;
+		text-align: center;
+	}
+	h2{
+		font-size: 18px;
+	}
+	p{
+		margin-left: 20px;
+	}
+}
+
+section#leftcol{
+	background-color: black;
+	padding: 10px;
+	margin: 0px;
+}
+
+
+#rightcol{
+	margin-bottom: auto;
+	background-color: rgb(88, 45, 90);
+	ul{list-style-type: none;};
+}
+blockquote {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    padding: 15px;
+    color:#e7aeee;
+    border-bottom: none;
+    font-size: 17px;
+}
+/*3.i  A style rule that generates content in the rendered page*/
+blockquote::before {
+    content: open-quote; 
+    font-size: 2em;
+	
+    color: #e7aeee;
+    line-height: 0;
+    vertical-align: -0.2em;
+}
+
+blockquote::after {
+    content: '”'; 
+    font-size: 2em;
+    color: #e7aeee;
+    vertical-align: -0.25em;
+}
+
+footer {
+    background-color: #525c65;
+    color: white;
+    text-align: center;
+    padding: 20px; 
+    margin: 0;
+    width: 100%;
+    border-top: none;
+    clear: both;
+	/*CSS clear both清除产生浮动 ，使用了css float浮动会产生css浮动，
+	这个时候就需要清理清除浮动，就用clear样式属性即可实现。*/
+}
+/*3.j  Arrange the page using Flexbox and Grid Layouts*/
+/*Please check the lake_layout.css file*/
