@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Exercise 2</title>
+	</head>
+	<body>
+		
+		<p >Check if the browser is online</p>
+		<p id="demo1"></p>
+		<p id="demo2">Online or not?</p>
+		<button onclick="myFunction()">click me</button>
+		<br>
+		<script>
+			let text = "<p>Browser Language: " + navigator.language + "</p>" ;
+			document.getElementById("demo1").innerHTML = text;
+			function myFunction()
+			{
+			    var x=navigator.onLine;
+			    document.getElementById("demo2").innerHTML=x;
+			}
+		</script>
+		
+	
+	</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="test" content="test">
+    <title>Number Guessing Game</title>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>Please guess a number between 1 and 100:</p>
+    <input type="number" id="guessField" min="1" max="100" />
+    <button id="submitGuess">Submit Guess</button>
+    <p id="feedback"></p>
+    <p id="previousGuesses"></p>
+    <p id="remainrounds"></p>
+    <button id="restartButton" class="hidden">Restart Game</button>
+
+    <script src="randominteger.js"></script>
+    <script>
+        let randomNumber = randomInt(); // Generate a random number between 1 and 100
+        let remainrounds = 10; // Player has 10 attempts
+        let previousGuesses = []; // Store player's guesses
+        let gameOver = false;
+
+        let guessField = document.getElementById('guessField');
+        let feedback = document.getElementById('feedback');
+        let previousGuessesDisplay = document.getElementById('previousGuesses');
+        let remainroundsDisplay = document.getElementById('remainrounds');
+        let restartButton = document.getElementById('restartButton');
+
+        // Update initial display
+        remainroundsDisplay.textContent = 'Remaining attempts: ' + remainrounds;
+        previousGuessesDisplay.textContent = 'Your previous guesses: None';
+
+        document.getElementById('submitGuess').addEventListener('click', function() {
+            if (gameOver) return; // If the game is over, don't process any new guesses
+
+            let userGuess = Number(guessField.value); // Get the player's guess
+            if (!userGuess || userGuess < 1 || userGuess > 100) {
+                feedback.textContent = 'Please enter a valid number between 1 and 100!';
+                return;
+            }
+
+            // Check for duplicate guess
+            if (previousGuesses.includes(userGuess)) {
+                feedback.textContent = 'You already guessed ' + userGuess + '! Try a different number.';
+                guessField.value = '';
+                return;
+            }
+
+            previousGuesses.push(userGuess); // Store the player's guess
+            remainrounds--; // Decrease remaining attempts
+
+            // Update display content
+            previousGuessesDisplay.textContent = 'Your previous guesses: ' + previousGuesses.join(', ');
+            remainroundsDisplay.textContent = 'Remaining attempts: ' + remainrounds;
+
+            if (userGuess === randomNumber) {
+                feedback.textContent = 'Congratulations, you guessed correctly!';
+                gameOver = true; // Game over
+                endGame();
+            } else if (remainrounds === 0) {
+                feedback.textContent = 'Sorry, you\'ve used all your chances! The correct number was ' + randomNumber;
+                gameOver = true; // Game over
+                endGame();
+            } else if (userGuess < randomNumber) {
+                feedback.textContent = 'Too low! Try again.';
+            } else {
+                feedback.textContent = 'Too high! Try again.';
+            }
+
+            guessField.value = ''; // Clear input field
+            guessField.focus(); // Refocus the input field
+        });
+
+        // Add Enter key support
+        guessField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('submitGuess').click();
+            }
+        });
+
+        function endGame() {
+            guessField.disabled = true; // Disable input field
+            document.getElementById('submitGuess').disabled = true; // Disable submit button
+            restartButton.classList.remove('hidden'); // Show restart button
+        }
+
+        restartButton.addEventListener('click', function() {
+            // Reset the game
+            remainrounds = 10;
+            previousGuesses = [];
+            randomNumber = randomInt();
+            gameOver = false;
+
+            feedback.textContent = '';
+            previousGuessesDisplay.textContent = 'Your previous guesses: None';
+            remainroundsDisplay.textContent = 'Remaining attempts: ' + remainrounds;
+            guessField.disabled = false;
+            document.getElementById('submitGuess').disabled = false;
+            restartButton.classList.add('hidden'); // Hide restart button
+            guessField.focus(); // Refocus the input field
+        });
+
+        // Focus on input field when page loads
+        guessField.focus();
+    </script>
+</body>
+</html>

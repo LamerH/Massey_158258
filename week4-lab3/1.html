@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Exercise 1</title>
+		
+		<script>
+			document.write("Welcome to  <strong>JavaScript</strong> Programming");
+		</script>
+	
+	</head>
+	<body>
+		<p>不会新建一行</p>
+		<script>
+			document.write("robot.");
+			document.write("bot.");
+		</script>
+<!--
+document.writeln()不会换行：换行指的是writeln()是源码中换行，
+而并不是浏览器显示的时候换行，想要在浏览器网页上显示换行的效果，就要使用<br/>标签
+write在源码中是连在一起的，而writeln是一行行分开的。
+-->
+		<br>
+		<script>
+			document.writeln("Oh");
+			document.writeln("my GOD");
+		</script>
+	</body>
+</html>
+		<!--
+		例子中代码执行到 document.write 就向页面写入，文档加载完成，但未调用函数，
+		所以不会执行函数中的 document.write，当点击按钮，触发了事件，则是在文档加载完成后使用的 document.write，
+		则会覆盖页面中原有信息。
+		
+		用 javascript 编写的代码只能通过 html/xhtml 文档才能执行，
+		代码一行一行解析，文档在加载的过程中实际是一边加载一边用 document.write 写出内容到屏幕上，
+		而加载完成后，document 就关闭。如果再调用 document.write 往网页上写内容的话，就会重写 document
+		-->
