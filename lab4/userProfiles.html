@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profiles</title>
+    <style>
+        .user-profile {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-weight: bold;
+            color: #34495e;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .preferences, .address {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .subscription {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .no-subscription {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Profiles</h1>
+    <div id="userProfiles"></div>
+
+    <script>
+        fetch('userProfiles.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Fetch error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(json => {
+                const userProfiles = document.getElementById('userProfiles');
+                
+                json.users.forEach(user => {
+                    const userElement = document.createElement('div');
+                    userElement.className = 'user-profile';
+                    
+                    userElement.innerHTML = `
+                        <div class="user-name">${user.firstName} ${user.lastName}</div>
+                        <div class="user-info"><strong>Email:</strong> ${user.email}</div>
+                        <div class="user-info"><strong>Date of Birth:</strong> ${user.dateOfBirth}</div>
+                        
+                        <div class="section-title">Address:</div>
+                        <div class="address">
+                            ${user.address.street}<br>
+                            ${user.address.city}, ${user.address.state} ${user.address.zipCode}
+                        </div>
+                        
+                        <div class="section-title">Preferences:</div>
+                        <div class="preferences">
+                            <div class="user-info"><strong>Theme:</strong> ${user.preferences.theme}</div>
+                            <div class="user-info"><strong>Language:</strong> ${user.preferences.language}</div>
+                            <div class="user-info"><strong>Notifications:</strong> ${user.preferences.notifications ? 'Enabled' : 'Disabled'}</div>
+                            <div class="user-info ${user.preferences.subscription ? 'subscription' : 'no-subscription'}">
+                                <strong>Newsletter:</strong> ${user.preferences.subscription ? 'Subscribed' : 'Not Subscribed'}
+                            </div>
+                        </div>
+                    `;
+                    
+                    userProfiles.appendChild(userElement);
+                });
+            })
+            .catch(err => {
+                console.error('Fetch error: ' + err.message);
+                document.getElementById('userProfiles').innerHTML = '<p>Error loading user profiles.</p>';
+            });
+    </script>
+</body>
+</html>

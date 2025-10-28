@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XML Book Catalog</title>
+	<style>
+        .book {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+	</style>
+</head>
+<body>
+    <div id="bookCatalog"></div>
+    <script>
+        // fetch API
+        fetch('book.xml')
+            .then(response => response.text())
+            .then(xmlText => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                const books = xmlDoc.getElementsByTagName('book');
+                let output = '<h2>Book Catalog</h2>';
+                
+                for (let i = 0; i < books.length; i++) {
+                    const title = books[i].getElementsByTagName('title')[0].textContent;
+                    const author = books[i].getElementsByTagName('author')[0].textContent;
+                    const price = books[i].getElementsByTagName('price')[0].textContent;
+                    const id = books[i].getAttribute('id');
+                    
+                    output += `
+                        <div class="book">
+                            <strong>Title:</strong> ${title}<br>
+                            <strong>Author:</strong> ${author}<br>
+                            <strong>Price:</strong> $${price}<br>
+                            <small>ID: ${id}</small>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('bookCatalog').innerHTML = output;
+            })
+            .catch(error => {
+                console.error('Error loading XML:', error);
+                document.getElementById('bookCatalog').innerHTML = '<p>Error loading book catalog.</p>';
+            });
+    </script>
+</body>
+</html>
